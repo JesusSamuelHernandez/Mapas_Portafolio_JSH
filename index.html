@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapas Históricos</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background: #0f0f0f;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    /* ── Swiper ──────────────────────────────────── */
+    .swiper-expo {
+      width: 100%;
+      height: 100vh;
+      overflow: visible !important;
+    }
+
+    .swiper-slide {
+      width: 88vw;
+      max-width: 900px;
+      height: 66vh;
+    }
+
+    /* ── Slide internals ─────────────────────────── */
+    .expo-container {
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      will-change: transform;
+      cursor: zoom-in;
+    }
+
+    .expo-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      user-select: none;
+      pointer-events: none;
+      will-change: transform, filter;
+    }
+
+    .expo-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      padding: 22px 26px;
+      font-size: clamp(.95rem, 4vw, 1.5rem);
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,.70) 0%,
+        rgba(0,0,0,.18) 52%,
+        transparent     100%
+      );
+      text-shadow: 0 2px 10px rgba(0,0,0,.5);
+      line-height: 1.3;
+      will-change: transform, opacity;
+      pointer-events: none;
+    }
+
+    /* ── Lightbox ────────────────────────────────── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.93);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      animation: lbFadeIn .2s ease;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    @keyframes lbFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .lightbox-img {
+      max-width: 96vw;
+      max-height: 96vh;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 12px 50px rgba(0,0,0,.7);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.25);
+      background: rgba(255,255,255,.10);
+      color: #fff;
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s;
+    }
+
+    .lightbox-close:hover {
+      background: rgba(255,255,255,.22);
+    }
+
+    /* ── Toast ───────────────────────────────────── */
+    .rotate-toast {
+      position: fixed;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,.10);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.15);
+      color: #fff;
+      padding: 13px 24px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .01em;
+      z-index: 500;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity .7s ease;
+    }
+
+    .rotate-toast.hide {
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Slider -->
+  <div class="swiper swiper-expo">
+    <div class="swiper-wrapper">
+
+      <div class="swiper-slide">
+        <div class="expo-container">
+          <img class="expo-image" src="./docs/Maps/mapas_01_pages-to-jpg-0001.jpg" alt="Mapa 1">
+          <div class="expo-content">Cartografía histórica de México</div>
+        </div>
+      </div>
+
+      <div class="swiper-slide">
+        <div class="expo-container">
+          <img class="expo-image" src="./docs/Maps/mapas_01_pages-to-jpg-0002.jpg" alt="Mapa 2">
+          <div class="expo-content">Exploración y conquista del territorio</div>
+        </div>
+      </div>
+
+      <div class="swiper-slide">
+        <div class="expo-container">
+          <img class="expo-image" src="./docs/Maps/mapas_01_pages-to-jpg-0003.jpg" alt="Mapa 3">
+          <div class="expo-content">Rutas de expedición colonial</div>
+        </div>
+      </div>
+
+      <div class="swiper-slide">
+        <div class="expo-container">
+          <img class="expo-image" src="./docs/Maps/mapas_01_pages-to-jpg-0004.jpg" alt="Mapa 4">
+          <div class="expo-content">Demarcaciones y fronteras históricas</div>
+        </div>
+      </div>
+
+      <div class="swiper-slide">
+        <div class="expo-container">
+          <img class="expo-image" src="./docs/Maps/mapas_01_pages-to-jpg-0005.jpg" alt="Mapa 5">
+          <div class="expo-content">División territorial del virreinato</div>
+        </div>
+      </div>
+
+      <div class="swiper-slide">
+        <div class="expo-container">
+          <img class="expo-image" src="./docs/Maps/mapas_02_pages-to-jpg-0001.jpg" alt="Mapa 6">
+          <div class="expo-content">Geografía y recursos naturales</div>
+        </div>
+      </div>
+
+      <div class="swiper-slide">
+        <div class="expo-container">
+          <img class="expo-image" src="./docs/Maps/mapas_02_pages-to-jpg-0002.jpg" alt="Mapa 7">
+          <div class="expo-content">Poblaciones indígenas prehispánicas</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox">
+    <button class="lightbox-close" aria-label="Cerrar">&times;</button>
+    <img class="lightbox-img" src="" alt="">
+  </div>
+
+  <!-- Toast orientación -->
+  <div id="rotate-toast" class="rotate-toast">
+    Gire el teléfono para una mejor visualización
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  const IMAGE_OFFSET = 1.25;
+
+  /* ─── Expo effect (vertical) ───────────────────────────── */
+  function applyEffect(sw) {
+    sw.slides.forEach(slide => {
+      const p    = Math.max(-1, Math.min(1, slide.progress));
+      const absP = Math.abs(p);
+
+      const container = slide.querySelector('.expo-container');
+      const image     = slide.querySelector('.expo-image');
+      const content   = slide.querySelector('.expo-content');
+      if (!container || !image) return;
+
+      const cScale = 1 + (IMAGE_OFFSET - 1) * absP;       // 1 → 1.25
+      const iScale = 1 + (IMAGE_OFFSET - 1) * 0.5 * absP; // 1 → 1.125
+
+      container.style.transformOrigin = p <= 0 ? 'center bottom' : 'center top';
+      container.style.transform       = `scale(${cScale})`;
+
+      image.style.transformOrigin = p <= 0 ? 'center top' : 'center bottom';
+      image.style.transform       = `translateY(${-p * 50}%) scale(${iScale})`;
+      image.style.filter          = `grayscale(${absP})`;
+
+      if (content) {
+        content.style.transform = `translateY(${-p * 100}%)`;
+        content.style.opacity   = String(Math.max(0, 1 - absP * 2));
+      }
+    });
+  }
+
+  function applyTransition(sw, ms) {
+    sw.slides.forEach(slide => {
+      ['.expo-container', '.expo-image', '.expo-content'].forEach(sel => {
+        const el = slide.querySelector(sel);
+        if (el) el.style.transitionDuration = ms + 'ms';
+      });
+    });
+  }
+
+  /* ─── Init Swiper ──────────────────────────────────────── */
+  new Swiper('.swiper-expo', {
+    direction:           'vertical',
+    slidesPerView:       'auto',
+    centeredSlides:      true,
+    spaceBetween:        16,
+    watchSlidesProgress: true,
+    grabCursor:          true,
+    keyboard:            { enabled: true },
+    on: {
+      init:          sw       => { applyTransition(sw, 0); applyEffect(sw); },
+      progress:      sw       => applyEffect(sw),
+      setTranslate:  sw       => applyEffect(sw),
+      setTransition: (sw, ms) => applyTransition(sw, ms),
+    },
+  });
+
+  /* ─── Lightbox ─────────────────────────────────────────── */
+  const lightbox    = document.getElementById('lightbox');
+  const lightboxImg = lightbox.querySelector('.lightbox-img');
+
+  document.querySelectorAll('.expo-container').forEach(container => {
+    container.addEventListener('click', () => {
+      const slide = container.closest('.swiper-slide');
+      // Solo abre si es el slide activo
+      if (!slide.classList.contains('swiper-slide-active')) return;
+      lightboxImg.src = container.querySelector('.expo-image').src;
+      lightbox.classList.add('open');
+    });
+  });
+
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox || e.target.classList.contains('lightbox-close')) {
+      lightbox.classList.remove('open');
+    }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') lightbox.classList.remove('open');
+  });
+
+  /* ─── Toast: aparece al cargar, desaparece a los 3s ─────── */
+  const toast = document.getElementById('rotate-toast');
+  setTimeout(() => {
+    toast.classList.add('hide');
+    toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+  }, 3000);
+</script>
+</body>
+</html>
